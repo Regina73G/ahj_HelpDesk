@@ -3,11 +3,12 @@
  *  Он содержит методы для генерации разметки тикета.
  * */
 export default class TicketView {
-  constructor(ticket, { onEdit, onDelete, onToggle, onOpenDescription }) {
+  constructor(ticket, { onEdit, onDelete, onToggle }, ticketService) {
     this.ticket = ticket;
     this.onEdit = onEdit;
     this.onDelete = onDelete;
     this.onToggle = onToggle;
+    this.ticketService = ticketService;
   }
 
   render() {
@@ -52,7 +53,7 @@ export default class TicketView {
     // описание
     const description = document.createElement('p');
     description.classList.add('ticket-description');
-    description.textContent = this.ticket.description;
+    description.textContent = '';
 
     // события
     status.addEventListener('change', () => this.onToggle(this.ticket, status.checked));
@@ -63,11 +64,17 @@ export default class TicketView {
         return;
       }
 
-      if(description.textContent === '') {
-        return
+      if (description.textContent === '') {
+        // загрузка описания с сервера
+        this.ticketService.get(this.ticket.id, (ticketData) => {
+          if (ticketData && ticketData.description) {
+            description.textContent = ticketData.description;
+            description.classList.toggle('openned');
+          }
+        });
+      } else {
+        description.classList.toggle('openned');
       }
-
-      description.classList.toggle('openned');
     });
 
     ticket.append(status, title, created, editBtn, deleteBtn, description);

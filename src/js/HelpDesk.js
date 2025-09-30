@@ -29,6 +29,8 @@ export default class HelpDesk {
   }
 
   renderTickets() {
+    this.element.innerHTML = '<div class="loader"></div>';
+
     this.ticketService.list((tickets) => {
       this.element.innerHTML = '';
       tickets.forEach((ticket) => {
@@ -36,7 +38,7 @@ export default class HelpDesk {
           onEdit: (t) => this.openEditForm(t),
           onDelete: (t) => this.deleteTicket(t),
           onToggle: (t, status) => this.toggleStatus(t, status),
-        });
+        }, this.ticketService);
         this.element.append(view.render());
       });
     });

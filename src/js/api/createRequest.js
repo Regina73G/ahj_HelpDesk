@@ -3,18 +3,20 @@ const createRequest = async (options = {}, callback) => {
   const xhr = new XMLHttpRequest();
 
   xhr.onload = () => {
-    if (xhr.status >= 200 && xhr.status < 300) {
-      let response = null;
-      try {
-        response = xhr.responseText ? JSON.parse(xhr.responseText) : null;
-      } catch (err) {
-        console.error('Ошибка парсинга JSON', err);
+    setTimeout(() => { // чтобы увидеть иконку загрузки
+      if (xhr.status >= 200 && xhr.status < 300) {
+        let response = null;
+        try {
+          response = xhr.responseText ? JSON.parse(xhr.responseText) : null;
+        } catch (err) {
+          console.error('Ошибка парсинга JSON', err);
+        }
+        callback(response);
+      } else {
+        console.error(`Ошибка запроса: ${xhr.status}`);
+        callback(null);
       }
-      callback(response);
-    } else {
-      console.error(`Ошибка запроса: ${xhr.status}`);
-      callback(null);
-    }
+    }, 500);
   };
 
   xhr.onerror = () => {
