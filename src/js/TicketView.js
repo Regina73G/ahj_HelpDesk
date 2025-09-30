@@ -3,7 +3,7 @@
  *  Он содержит методы для генерации разметки тикета.
  * */
 export default class TicketView {
-  constructor(ticket, { onEdit, onDelete, onToggle }) {
+  constructor(ticket, { onEdit, onDelete, onToggle, onOpenDescription }) {
     this.ticket = ticket;
     this.onEdit = onEdit;
     this.onDelete = onDelete;
@@ -31,7 +31,13 @@ export default class TicketView {
     // дата
     const created = document.createElement('span');
     created.classList.add('ticket-date');
-    created.textContent = ticket.created;
+    created.textContent = new Date(this.ticket.created).toLocaleString('ru-RU', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).replace(',', '');
 
     // кнопка редактировать
     const editBtn = document.createElement('button');
@@ -52,6 +58,17 @@ export default class TicketView {
     status.addEventListener('change', () => this.onToggle(this.ticket, status.checked));
     editBtn.addEventListener('click', () => this.onEdit(this.ticket));
     deleteBtn.addEventListener('click', () => this.onDelete(this.ticket));
+    ticket.addEventListener('click', (e) => {
+      if (e.target.closest('.ticket-edit') || e.target.closest('.ticket-delete') || e.target.closest('.ticket-status')) {
+        return;
+      }
+
+      if(description.textContent === '') {
+        return
+      }
+
+      description.classList.toggle('openned');
+    });
 
     ticket.append(status, title, created, editBtn, deleteBtn, description);
     return ticket;

@@ -1,0 +1,189 @@
+#root {
+  display: flex;
+  flex-direction: column;
+  margin: 40px 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+.new-ticket-btn {
+  margin-left: auto;
+  margin-bottom: 20px;
+  padding: 10px 30px 10px 15px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.ticket {
+  display: grid;
+  grid-template-columns: 40px 1fr 150px 40px 30px;
+  grid-template-rows: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 30px 10px 10px;
+  line-height: 32px;
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  cursor: pointer;
+}
+
+.ticket:last-child {
+  border-bottom: 1px solid black;
+}
+
+.ticket-title {
+  margin: 0;
+}
+
+.ticket-status {
+  position: relative;
+  margin: 0;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  appearance: none;
+}
+
+.ticket-status::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.ticket-edit,
+.ticket-delete,
+.ticket-status::before {
+  width: 32px;
+  height: 32px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.ticket-status:checked::before {
+  background-image: url('https://img.icons8.com/?size=100&id=8hyK0zd1ZPTO&format=png&color=000000');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px;
+}
+
+.new-ticket-btn:hover,
+.ticket-edit:hover,
+.ticket-delete:hover,
+.ticket-status:hover::before {
+  background-color: lightgrey;
+}
+
+
+.ticket-description {
+  grid-column: 2 / 4;
+  grid-row: 2;
+
+  margin: 0;
+  max-height: 0;
+  opacity: 0;
+  padding: 0;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+
+.ticket-description.openned {
+  max-height: 300px;
+  opacity: 1;
+  padding: 20px 0;
+}
+
+/* form и modal*/
+.form,
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 380px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  z-index: 999;
+}
+
+body.modal-open::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 998;
+}
+
+.form_title,
+.modal_title {
+  text-align: center;
+  font-weight: 400;
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+label {
+  margin-bottom: 15px;
+}
+
+.form_ticket-description{
+  resize: none;
+  height: 82px;
+}
+
+.form_ticket-title,
+.form_ticket-description {
+  margin-top: 10px;
+  padding: 5px;
+  width: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  box-sizing: border-box;
+  border: 1px solid black;
+}
+
+.form_buttons,
+.modal-buttons {
+  align-self: flex-end;
+}
+
+.form_btn-save,
+.modal_btn-confirm {
+  margin-left: 10px;
+}
+
+.form_btn-cancel,
+.form_btn-save,
+.modal_btn-cancel,
+.modal_btn-confirm {
+  padding: 10px 15px;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.form_btn-cancel:hover,
+.form_btn-save:hover {
+  background-color: lightgrey;
+}

@@ -25,7 +25,7 @@ export default class Modal {
 
     // кнопки
     const buttons = document.createElement('div');
-    buttons.classList.add('buttons');
+    buttons.classList.add('modal-buttons');
 
     const cancelBtn = document.createElement('button');
     cancelBtn.classList.add('modal_btn-cancel');
@@ -43,20 +43,24 @@ export default class Modal {
     this.container.append(this.modal);
 
     this.cancelBtn = cancelBtn;
-    this.confirmlBtn = confirmBtn;
+    this.confirmBtn = confirmBtn;
+
+    document.body.classList.add('modal-open');
   }
 
   onCancel(callback) {
     this.cancelBtn.addEventListener('click', () => {
       callback();
       this.modal.remove();
+      document.body.classList.remove('modal-open');
     });
   }
 
   onConfirm(callback) {
-    this.confirmlBtn.addEventListener('click', () => {
+    this.confirmBtn.addEventListener('click', () => {
       callback();
       this.modal.remove();
+      document.body.classList.remove('modal-open');
     });
   }
 }

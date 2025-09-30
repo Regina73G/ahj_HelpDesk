@@ -11,8 +11,10 @@ export default class HelpDesk {
       throw new Error('This is not HTML element!');
     }
     this.container = container;
-    this.element = document.createElement('div');
     this.ticketService = ticketService;
+
+    this.element = document.createElement('div');
+    this.element.classList.add('help-desk');
   }
 
   init() {
@@ -21,7 +23,6 @@ export default class HelpDesk {
     const addBtn = document.createElement('button');
     addBtn.classList.add('new-ticket-btn');
     addBtn.textContent = 'Добавить тикет';
-    
     addBtn.addEventListener('click', () => this.openCreateForm());
 
     this.container.append(addBtn, this.element);
@@ -72,8 +73,8 @@ export default class HelpDesk {
   }
 
   deleteTicket(ticket) {
-    const modal =  new DeleteModal('Удалить тикет', 'Вы уверены, что хотите удалить тикет? Это действие необратимо.');
-    
+    const modal = new DeleteModal('Удалить тикет', 'Вы уверены, что хотите удалить тикет? Это действие необратимо.');
+
     modal.onConfirm(() => {
       this.ticketService.delete(ticket.id, () => this.renderTickets());
       modal.modal.remove();

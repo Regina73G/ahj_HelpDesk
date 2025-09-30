@@ -16,10 +16,11 @@ export default class TicketForm {
     
     const title = document.createElement('h3');
     title.classList.add('form_title');
-    title.textContent = ticket ? 'Редактировать тикет' : 'Новый тикет';
+    title.textContent = ticket ? 'Изменить тикет' : 'Добавить тикет';
 
     // заголовок тикета
     const ticketTitleLabel = document.createElement('label');
+    ticketTitleLabel.textContent = 'Краткое описание';
     const ticketTitle = document.createElement('input');
     ticketTitle.classList.add('form_ticket-title');
     ticketTitle.type = 'text';
@@ -31,6 +32,7 @@ export default class TicketForm {
 
     // описание тикета
     const ticketDescriptionLabel = document.createElement('label');
+    ticketDescriptionLabel.textContent = 'Подробное описание';
     const ticketDescription = document.createElement('textarea');
     ticketDescription.classList.add('form_ticket-description');
     ticketDescription.name = 'description';
@@ -46,15 +48,17 @@ export default class TicketForm {
     cancelBtn.type = 'button';
     cancelBtn.textContent = 'Отмена';
 
-    const savelBtn = document.createElement('button');
-    savelBtn.classList.add('form_btn-save');
-    savelBtn.type = 'submit';
-    savelBtn.textContent = 'Ок';
+    const saveBtn = document.createElement('button');
+    saveBtn.classList.add('form_btn-save');
+    saveBtn.type = 'submit';
+    saveBtn.textContent = 'Ок';
 
-    buttons.append(cancelBtn, savelBtn);
+    buttons.append(cancelBtn, saveBtn);
 
     this.form.append(title, ticketTitleLabel, ticketDescriptionLabel, buttons);
     this.container.append(this.form);
+
+    document.body.classList.add('modal-open');
   }
 
   onSubmit(callback) {
@@ -65,6 +69,7 @@ export default class TicketForm {
         name: formData.get('name'),
         description: formData.get('description'),
       });
+      document.body.classList.remove('modal-open');
     });
   }
 
@@ -73,6 +78,7 @@ export default class TicketForm {
     cancelBtn.addEventListener('click', () => {
       callback();
       this.form.remove();
+      document.body.classList.remove('modal-open');
     });
   }
 }
