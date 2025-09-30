@@ -34,11 +34,15 @@ export default class HelpDesk {
     this.ticketService.list((tickets) => {
       this.element.innerHTML = '';
       tickets.forEach((ticket) => {
-        const view = new TicketView(ticket, {
-          onEdit: (t) => this.openEditForm(t),
-          onDelete: (t) => this.deleteTicket(t),
-          onToggle: (t, status) => this.toggleStatus(t, status),
-        }, this.ticketService);
+        const view = new TicketView(
+          ticket,
+          {
+            onEdit: (t) => this.openEditForm(t),
+            onDelete: (t) => this.deleteTicket(t),
+            onToggle: (t, status) => this.toggleStatus(t, status),
+          },
+          this.ticketService,
+        );
         this.element.append(view.render());
       });
     });

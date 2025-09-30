@@ -13,7 +13,7 @@ export default class TicketForm {
   createForm(ticket = null) {
     this.form = document.createElement('form');
     this.form.classList.add('form');
-    
+
     const title = document.createElement('h3');
     title.classList.add('form_title');
     title.textContent = ticket ? 'Изменить тикет' : 'Добавить тикет';
@@ -28,7 +28,6 @@ export default class TicketForm {
     ticketTitle.required = true;
     ticketTitle.value = ticket ? ticket.name : '';
     ticketTitleLabel.append(ticketTitle);
-
 
     // описание тикета
     const ticketDescriptionLabel = document.createElement('label');

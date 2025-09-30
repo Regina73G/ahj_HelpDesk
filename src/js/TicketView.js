@@ -16,7 +16,7 @@ export default class TicketView {
     const ticket = document.createElement('div');
     ticket.classList.add('ticket');
     ticket.dataset.id = this.ticket.id;
-    
+
     // чекбокс
     const status = document.createElement('input');
     status.type = 'checkbox';
@@ -32,13 +32,15 @@ export default class TicketView {
     // дата
     const created = document.createElement('span');
     created.classList.add('ticket-date');
-    created.textContent = new Date(this.ticket.created).toLocaleString('ru-RU', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    }).replace(',', '');
+    created.textContent = new Date(this.ticket.created)
+      .toLocaleString('ru-RU', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      })
+      .replace(',', '');
 
     // кнопка редактировать
     const editBtn = document.createElement('button');
@@ -60,7 +62,11 @@ export default class TicketView {
     editBtn.addEventListener('click', () => this.onEdit(this.ticket));
     deleteBtn.addEventListener('click', () => this.onDelete(this.ticket));
     ticket.addEventListener('click', (e) => {
-      if (e.target.closest('.ticket-edit') || e.target.closest('.ticket-delete') || e.target.closest('.ticket-status')) {
+      if (
+        e.target.closest('.ticket-edit') ||
+        e.target.closest('.ticket-delete') ||
+        e.target.closest('.ticket-status')
+      ) {
         return;
       }
 
